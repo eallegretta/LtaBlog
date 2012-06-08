@@ -8,6 +8,12 @@
 	font-size:12px;
 }
 
+a 
+{
+	color:#0066cc;
+	text-decoration:none;
+}
+
 #site
 {
 	padding:4px;
@@ -26,12 +32,30 @@
 {
 	padding-top:10px;
 	clear:both;
+	float:left;
+	width:790px;
+	margin-bottom:10px;
 }
 
 #currentUser
 {
 	float:right;
 	font-size:12px;
+}
+
+#footer
+{
+	clear:both;
+	text-align:center;
+	padding:4px;
+	border-top:1px solid #ccc;
+	margin-top:8px;
+}
+
+#sidebar
+{
+	float:right;
+	width:200px;
 }
 
 .inline-login form
@@ -42,4 +66,52 @@
 .inline-login div 
 {
 	display:inline;
+}
+
+.postTags
+{
+	font-weight:bold;
+}
+
+.postTags ul
+{
+	margin:0;
+	list-style-type:none;
+	display:inline;
+}
+
+.postTags ul li
+{
+	display:inline;
+	border: 1px solid #ccc;
+	padding:2px;
+	font-weight:normal;
+}
+
+.postTitle
+{
+	font-size:14px;
+	font-weight:bold;
+	margin-bottom:8px;
+}
+
+.postBody
+{
+	margin-bottom:8px;
+}
+
+.postAuthor
+{
+	padding-bottom:4px;
+}
+
+.postFooter
+{
+	padding-top:4px;
+	padding-bottom:8px;
+}
+
+.post
+{
+	border-bottom:1px solid #ccc;
 }

@@ -13,12 +13,19 @@ namespace Eaa.LtaBlog.Application.Models
 	{
 		private readonly int _totalCount;
 
-		public PostsViewModel(IList<Post> posts, int currentPage, int totalCount)
+		public PostsViewModel(IList<Post> posts, int currentPage, int totalCount, string selectedTag)
 		{
 			CurrentPage = currentPage;
 			_totalCount = totalCount;
+			Tag = selectedTag;
 
 			Posts = Mapper.Map(posts, Posts);
+		}
+
+		public string Tag
+		{
+			get;
+			private set;
 		}
 
 		public int CurrentPage

@@ -17,8 +17,10 @@
 		<div id="content">
 			@RenderBody()
 		</div>
-		<div id="tagCloud">
+		<div id="sidebar">
+			<div id="tagCloud">
 			@Html.Action("TagCloud", "Posts")
+			</div>
 		</div>
 		<div id="footer">
 			Blog Created using LTA Blog by EAA Software | Source Code available at: <a href="https://github.com/eallegretta/LtaBlog">GitHub</a>

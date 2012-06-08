@@ -7,6 +7,7 @@ using Eaa.LtaBlog.Application.Models;
 using Eaa.LtaBlog.Application.Core.Entities;
 using Eaa.LtaBlog.Application.Core.Commands.Account;
 using Eaa.LtaBlog.Application.Core.Commands.Posts;
+using Eaa.LtaBlog.Application.RavenDb.Indexes;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(Eaa.LtaBlog.Application.App_Start.AutoMappings), "Start")]
 namespace Eaa.LtaBlog.Application.App_Start
@@ -34,7 +35,7 @@ namespace Eaa.LtaBlog.Application.App_Start
 			Mapper.CreateMap<Post, PostsViewModel.PostModel>().ConvertUsing(p => new PostsViewModel.PostModel { Post = p });
 			Mapper.CreateMap<ProfileModel, LoginModel>();
 			Mapper.CreateMap<User, ProfileModel>();
-
+			Mapper.CreateMap<Tag, TagCloudViewModel.TagModel>();
 		}
 	}
 }

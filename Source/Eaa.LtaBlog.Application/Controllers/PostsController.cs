@@ -10,36 +10,40 @@ using Eaa.LtaBlog.Application.Core.Queries;
 using AutoMapper;
 using Eaa.LtaBlog.Application.Core.Entities;
 using Eaa.LtaBlog.Application.Core.Commands.Posts;
+using Eaa.LtaBlog.Application.RavenDb.Indexes;
 
 namespace Eaa.LtaBlog.Application.Controllers
 {
-    public class PostsController : LtaController
-    {
-        //
-        // GET: /Posts/
+	public class PostsController : LtaController
+	{
+		//
+		// GET: /Posts/
 
-        public ActionResult List(int? page = 1)
-        {
+		public ActionResult List(int? page = 1, string tag = null)
+		{
 			int skip = Settings.Default.PostsPageSize * (page.Value - 1);
 
 			RavenQueryStatistics stats;
 
-			var posts = RavenSession.Query<Post>()
+			IQueryable<Post> posts;
+
+			posts = RavenSession.Query<Post>()
 				.Statistics(out stats)
 				.Take(Settings.Default.PostsPageSize)
-				.OrderByDescending(x => x.CreatedAt)
-				.ToList();
+				.OrderByDescending(x => x.CreatedAt);
 
-			var viewModel = new PostsViewModel(posts, page.Value, stats.TotalResults);
+			if(!string.IsNullOrWhiteSpace(tag))
+				posts = posts.Where(p => p.Tags.Any(t => t == tag));
+
+			var viewModel = new PostsViewModel(posts.ToList(), page.Value, stats.TotalResults, tag);
 
 			foreach (var post in viewModel.Posts)
 			{
 				post.Author = RavenSession.GetPostAuthor(post.Post);
 			}
 
-            return View(viewModel);
-        }
-
+			return View(viewModel);
+		}
 
 		public ActionResult Show(string id)
 		{
@@ -58,7 +62,11 @@ namespace Eaa.LtaBlog.Application.Controllers
 		[ChildActionOnly]
 		public ActionResult TagCloud()
 		{
-			return new EmptyResult();
+			var tags = (from tag in RavenSession.Query<Tag, TagCloudIndex>()
+					   orderby tag.Count descending
+					   select tag).Take(100).ToList();
+
+			return PartialView(new TagCloudViewModel(tags));
 		}
 
 		[HttpPost]
@@ -79,9 +87,9 @@ namespace Eaa.LtaBlog.Application.Controllers
 
 				ModelState.AddValidationResults(addCommentCmd.ValidationResults());
 			}
-			
+
 			return RedirectToAction("Show", new { id = input.PostId });
 		}
 
-    }
+	}
 }

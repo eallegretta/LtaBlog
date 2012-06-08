@@ -5,6 +5,11 @@
 }
 
 <div id="posts">
+@if (!string.IsNullOrWhiteSpace(Model.Tag))
+{
+	<div>Showing posts for tag: <b>@Model.Tag</b></div>
+}
+
 @foreach (var post in Model.Posts)
 {
 	@Html.Partial("PostSummary", post)
@@ -15,11 +20,11 @@
 	<div class="postsPager">
 	@if (Model.HasPrevPage)
 	{
-		<div class="postsPrevPage">@Html.ActionLink("Previous Page", "List", new { page = Model.CurrentPage - 1 });</div>
+		<div class="postsPrevPage">@Html.ActionLink("Previous Page", "List", new { tag = Model.Tag, page = Model.CurrentPage - 1 });</div>
 	}
 	@if (Model.HasPrevPage)
 	{
-		<div class="postsPrevPage">@Html.ActionLink("Previous Page", "List", new { page = Model.CurrentPage + 1 });</div>
+		<div class="postsPrevPage">@Html.ActionLink("Previous Page", "List", new { tag = Model.Tag, page = Model.CurrentPage + 1 });</div>
 	}
 	</div>
 }

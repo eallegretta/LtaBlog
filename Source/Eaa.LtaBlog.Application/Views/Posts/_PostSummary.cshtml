@@ -4,9 +4,9 @@
 	<div class="postTitle">@Html.ActionLink(Model.Post.Title, "Show", new { id = Model.Post.Id })</div>
 	<div class="postBody">@Html.Raw(Model.Post.Body)</div>
 	<div class="postFooter">
-		<div class="postAuthor">@Model.Author</div>
-		<div class="postAuthor">@Model.Post.CreatedAt</div>
+		<div class="postAuthor">Created at @Model.Post.CreatedAt by @Model.Author</div>
 		<div class="postTags">
+			Tags:
 			<ul>
 			@foreach (var tag in Model.Post.Tags)
 			{

@@ -104,6 +104,7 @@
     <Compile Include="App_Start\StructureMapMvc.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Core\Commands\Posts\AddCommentCommand.cs" />
+    <Compile Include="Core\Entities\Tag.cs" />
     <Compile Include="Models\CommentInputModel.cs" />
     <Compile Include="Controllers\LtaController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
@@ -158,6 +159,7 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PostsViewModel.cs" />
     <Compile Include="Models\ProfileModel.cs" />
+    <Compile Include="Models\TagCloudViewModel.cs" />
     <Compile Include="Modules\ContainerModule.cs" />
     <Compile Include="Modules\CurrentUserModule.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -167,6 +169,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="RavenDb\Indexes\TagCloudIndex.cs" />
     <Compile Include="RavenDb\RavenDbStore.cs" />
     <Compile Include="RavenDb\Web\RavenDbGlobalActionFilter.cs" />
     <Compile Include="Services\UserService.cs" />
@@ -276,6 +279,7 @@
     <Content Include="Views\Account\EditProfile.cshtml" />
     <Content Include="Views\Posts\Show.cshtml" />
     <Content Include="Views\Posts\_PostSummary.cshtml" />
+    <Content Include="Views\Posts\_TagCloud.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

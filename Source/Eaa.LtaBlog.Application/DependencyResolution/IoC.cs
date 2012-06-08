@@ -1,6 +1,9 @@
 using StructureMap;
 using System;
+using System.Linq;
 using System.Web.Mvc;
+using System.Reflection;
+using StructureMap.Interceptors;
 
 namespace Eaa.LtaBlog.Application.DependencyResolution
 {
@@ -26,6 +29,8 @@ namespace Eaa.LtaBlog.Application.DependencyResolution
 							if (expression != null)
 								expression(x);
 
+							RegisterInterceptors(x);
+
 							x.Scan(scan =>
 									{
 										scan.TheCallingAssembly();
@@ -34,6 +39,18 @@ namespace Eaa.LtaBlog.Application.DependencyResolution
 						});
 
 			return ObjectFactory.Container;
+		}
+
+		private static void RegisterInterceptors(IInitializationExpression exp)
+		{
+			var interceptorTypes = from t in typeof(IoC).Assembly.GetTypes()
+								   where typeof(TypeInterceptor).IsAssignableFrom(t)
+								   select t;
+
+			foreach (var type in interceptorTypes)
+			{
+				exp.RegisterInterceptor(Activator.CreateInstance(type) as TypeInterceptor);
+			}
 		}
 	}
 }

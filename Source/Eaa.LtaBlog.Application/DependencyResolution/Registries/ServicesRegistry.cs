@@ -12,6 +12,14 @@ namespace Eaa.LtaBlog.Application.DependencyResolution.Registries
 		public ServicesRegistry()
 		{
 			ForSingletonOf<ICommandProcessor>().Use<CommandProcessor>();
+
+			For<Command>().Transient();
+
+			Scan(x =>
+			{
+				x.TheCallingAssembly();
+				x.AddAllTypesOf<Command>();
+			});
 			
 			Scan(x =>
 			{

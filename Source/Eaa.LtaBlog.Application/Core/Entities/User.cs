@@ -56,11 +56,7 @@ namespace Eaa.LtaBlog.Application.Core.Entities
 
 		private string GetHashedPassword(string pwd)
 		{
-			using (var sha = SHA256.Create())
-			{
-				var computedHash = sha.ComputeHash(Encoding.Unicode.GetBytes(PasswordSalt + pwd + SALT));
-				return Convert.ToBase64String(computedHash);
-			}
+			return (PasswordSalt + pwd + SALT).ToSHA256();
 		}
 
 		public bool ValidatePassword(string password)

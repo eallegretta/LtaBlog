@@ -11,17 +11,24 @@
 <body>
 	<div id="site">
 		<div id="header">
-			@Html.ActionLink("LTA Blog", "List", "Posts")
+			@Html.ActionLink("Welcome to My Blog!!!!", "List", "Posts")
 			<div id="currentUser">@Html.Action("CurrentUser", "Account")</div>
 		</div>
-		<div id="content">@RenderBody()</div>
+		<div id="content">
+			@RenderBody()
+		</div>
+		<div id="tagCloud">
+			@Html.Action("TagCloud", "Posts")
+		</div>
 		<div id="footer">
+			Blog Created using LTA Blog by EAA Software | Source Code available at: <a href="https://github.com/eallegretta/LtaBlog">GitHub</a>
 		</div>
 	</div>
 	<script src="@Url.Content("~/Scripts/jquery-1.7.2.min.js")" type="text/javascript"></script>
 	<script src="@Url.Content("~/Scripts/jquery-ui-1.8.20.min.js")" type="text/javascript"></script>
 	<script src="@Url.Content("~/Scripts/modernizr-2.5.3.js")" type="text/javascript"></script>
 	<script src="@Url.Content("~/Scripts/jquery.noty.js")" type="text/javascript"></script>
+	@Raven.Client.MvcIntegration.RavenProfiler.CurrentRequestSessions()
 	@RenderSection("scripts", false)
 	@if (TempData["Notify_Message"] != null)
  {

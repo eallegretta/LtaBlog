@@ -10,11 +10,19 @@ using Eaa.LtaBlog.Application.Core.Entities.Security;
 using Eaa.LtaBlog.Application.Core.Entities;
 using Eaa.LtaBlog.Application.Core.Commands.Account;
 using AutoMapper;
+using Eaa.LtaBlog.Application.Core.ServiceContracts;
 
 namespace Eaa.LtaBlog.Application.Controllers
 {
     public class AccountController : LtaController
     {
+		private ILoggedUserService _loggedUserService;
+
+		public AccountController(ILoggedUserService loggedUserService)
+		{
+			_loggedUserService = loggedUserService;
+		}
+
         public ActionResult Login(string returnUrl)
         {
 			return View(new LoginModel { ReturnUrl = returnUrl });
@@ -101,6 +109,8 @@ namespace Eaa.LtaBlog.Application.Controllers
 
 				if (editProfileCommand.IsValid)
 				{
+					_loggedUserService.RefreshLoggedUserInformation();
+
 					input.Password = input.ValidatePassword = string.Empty;
 
 					Notify("Your profile has been succesfully updated", NotifyType.Success, NotifyPosition.Top);

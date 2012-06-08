@@ -37,6 +37,9 @@
     <Reference Include="AutoMapper">
       <HintPath>..\packages\AutoMapper.2.1.267\lib\net40\AutoMapper.dll</HintPath>
     </Reference>
+    <Reference Include="Castle.Core">
+      <HintPath>..\packages\Castle.Core.3.0.0.4001\lib\net40-client\Castle.Core.dll</HintPath>
+    </Reference>
     <Reference Include="DataAnnotationsExtensions">
       <HintPath>..\packages\DataAnnotationsExtensions.1.1.0.0\lib\NETFramework40\DataAnnotationsExtensions.dll</HintPath>
     </Reference>
@@ -56,11 +59,15 @@
     <Reference Include="Raven.Client.Lightweight">
       <HintPath>..\packages\RavenDB.Client.1.0.960\lib\net40\Raven.Client.Lightweight.dll</HintPath>
     </Reference>
+    <Reference Include="Raven.Client.MvcIntegration">
+      <HintPath>..\packages\RavenDB.Client.MvcIntegration.1.0.960\lib\net40\Raven.Client.MvcIntegration.dll</HintPath>
+    </Reference>
     <Reference Include="StructureMap">
       <HintPath>..\packages\structuremap.2.6.3\lib\StructureMap.dll</HintPath>
     </Reference>
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.WebPages, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web.Helpers, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
@@ -96,6 +103,8 @@
     <Compile Include="App_Start\Razor.cs" />
     <Compile Include="App_Start\StructureMapMvc.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Core\Commands\Posts\AddCommentCommand.cs" />
+    <Compile Include="Models\CommentInputModel.cs" />
     <Compile Include="Controllers\LtaController.cs" />
     <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Core\Commands\Account\EditProfileCommand.cs" />
@@ -104,21 +113,48 @@
     <Compile Include="Core\Commands\CommandProcessor.cs" />
     <Compile Include="Core\Commands\ICommandProcessor.cs" />
     <Compile Include="Core\Entities\Security\LtaPrincipal.cs" />
+    <Compile Include="Core\Extensions\System.Collections.Generic\EnumerableExtensions.cs" />
+    <Compile Include="Core\Extensions\System.Data\IDataRecordExtensions.cs" />
+    <Compile Include="Core\Extensions\System.Net\UriExtensions.cs" />
+    <Compile Include="Core\Extensions\System.Text\StringBuilderExtensions.cs" />
+    <Compile Include="Core\Extensions\System\ObjectExtensions.cs" />
     <Compile Include="Core\Extensions\System\StringExtensions.cs" />
+    <Compile Include="Core\Extensions\System\TypeExtensions.cs" />
     <Compile Include="Core\Queries\PostExtensions.cs" />
+    <Compile Include="Core\ServiceContracts\IUserService.cs" />
+    <Compile Include="DependencyResolution\Interceptors\CachingInterceptor.cs" />
+    <Compile Include="DependencyResolution\Interceptors\DefaultCacheItemSerializer.cs" />
     <Compile Include="DependencyResolution\IoC.cs" />
     <Compile Include="DependencyResolution\Mvc\IoCControllerFactory.cs" />
     <Compile Include="DependencyResolution\Registries\ControllersRegistry.cs" />
     <Compile Include="DependencyResolution\Registries\HttpModulesRegistry.cs" />
     <Compile Include="DependencyResolution\Registries\RavenRegistry.cs" />
     <Compile Include="DependencyResolution\Registries\ServicesRegistry.cs" />
-    <Compile Include="DependencyResolution\SmDependencyResolver.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Core\Entities\Comment.cs" />
     <Compile Include="Core\Entities\Post.cs" />
     <Compile Include="Core\Entities\User.cs" />
+    <Compile Include="Infraestructure\Caching\AbsoluteTime.cs" />
+    <Compile Include="Infraestructure\Caching\BasicCacheKeyProvider.cs" />
+    <Compile Include="Infraestructure\Caching\CacheItemPriority.cs" />
+    <Compile Include="Infraestructure\Caching\CacheItemRemovedReason.cs" />
+    <Compile Include="Infraestructure\Caching\CacheOutputAttribute.cs" />
+    <Compile Include="Infraestructure\Caching\CacheProviderFactory.cs" />
+    <Compile Include="Infraestructure\Caching\Providers\HashtableCacheProviderFactory.cs" />
+    <Compile Include="Infraestructure\Caching\ICacheItemExpiration.cs" />
+    <Compile Include="Infraestructure\Caching\ICacheItemSerializer.cs" />
+    <Compile Include="Infraestructure\Caching\ICacheKeyProvider.cs" />
+    <Compile Include="Infraestructure\Caching\ICacheProvider.cs" />
+    <Compile Include="Infraestructure\Caching\ICacheProviderFactory.cs" />
+    <Compile Include="Infraestructure\Caching\ICacheRefreshAction.cs" />
+    <Compile Include="Infraestructure\Caching\JsonCacheItemSerializer.cs" />
+    <Compile Include="Infraestructure\Caching\NeverExpired.cs" />
+    <Compile Include="Infraestructure\Caching\Providers\HashtableCacheProvider.cs" />
+    <Compile Include="Infraestructure\Caching\Providers\MemoryCacheProvider.cs" />
+    <Compile Include="Infraestructure\Caching\RequiresCachingAttribute.cs" />
+    <Compile Include="Infraestructure\Caching\SlidingTime.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\PostsViewModel.cs" />
     <Compile Include="Models\ProfileModel.cs" />
@@ -133,6 +169,7 @@
     </Compile>
     <Compile Include="RavenDb\RavenDbStore.cs" />
     <Compile Include="RavenDb\Web\RavenDbGlobalActionFilter.cs" />
+    <Compile Include="Services\UserService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\noty\jquery.noty.css" />
@@ -218,7 +255,6 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Services\" />
     <Folder Include="Utils\" />
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +274,8 @@
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Account\EditProfile.cshtml" />
+    <Content Include="Views\Posts\Show.cshtml" />
+    <Content Include="Views\Posts\_PostSummary.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

@@ -6,6 +6,7 @@ using AutoMapper;
 using Eaa.LtaBlog.Application.Models;
 using Eaa.LtaBlog.Application.Core.Entities;
 using Eaa.LtaBlog.Application.Core.Commands.Account;
+using Eaa.LtaBlog.Application.Core.Commands.Posts;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(Eaa.LtaBlog.Application.App_Start.AutoMappings), "Start")]
 namespace Eaa.LtaBlog.Application.App_Start
@@ -25,6 +26,7 @@ namespace Eaa.LtaBlog.Application.App_Start
 			Mapper.CreateMap<RegisterUserCommand, User>()
 				.AfterMap((ruc, u) => u.SetPassword(ruc.Password));
 			Mapper.CreateMap<ProfileModel, EditProfileCommand>();
+			Mapper.CreateMap<CommentInputModel, AddCommentCommand>();
 		}
 
 		private static void MapModels()
@@ -32,6 +34,7 @@ namespace Eaa.LtaBlog.Application.App_Start
 			Mapper.CreateMap<Post, PostsViewModel.PostModel>().ConvertUsing(p => new PostsViewModel.PostModel { Post = p });
 			Mapper.CreateMap<ProfileModel, LoginModel>();
 			Mapper.CreateMap<User, ProfileModel>();
+
 		}
 	}
 }

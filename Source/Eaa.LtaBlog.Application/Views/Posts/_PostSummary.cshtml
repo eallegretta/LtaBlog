@@ -1,0 +1,18 @@
+﻿@model Eaa.LtaBlog.Application.Models.PostsViewModel.PostModel
+	
+<div id="post-@Model.Post.Id" class="post">
+	<div class="postTitle">@Html.ActionLink(Model.Post.Title, "Show", new { id = Model.Post.Id })</div>
+	<div class="postBody">@Html.Raw(Model.Post.Body)</div>
+	<div class="postFooter">
+		<div class="postAuthor">@Model.Author</div>
+		<div class="postAuthor">@Model.Post.CreatedAt</div>
+		<div class="postTags">
+			<ul>
+			@foreach (var tag in Model.Post.Tags)
+			{
+				<li>@tag</li>
+			}
+			</ul>
+		</div>
+	</div>
+</div>

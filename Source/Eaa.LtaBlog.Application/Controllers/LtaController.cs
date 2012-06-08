@@ -9,6 +9,7 @@ using Eaa.LtaBlog.Application.Core.Commands;
 using Eaa.LtaBlog.Application.Core.Entities;
 using Eaa.LtaBlog.Application.Core.Entities.Security;
 using Eaa.LtaBlog.Application.DependencyResolution;
+using Eaa.LtaBlog.Application.Core.ServiceContracts;
 
 namespace Eaa.LtaBlog.Application.Controllers
 {

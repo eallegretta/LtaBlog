@@ -31,5 +31,23 @@ namespace Eaa.LtaBlog.Application.Properties {
                 return ((int)(this["PostsPageSize"]));
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("30")]
+        public int CacheAbsoluteExpirationMinutes {
+            get {
+                return ((int)(this["CacheAbsoluteExpirationMinutes"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Eaa.LtaBlog.Application.Infraestructure.Caching.Providers.MemoryCacheProvider")]
+        public string CacheProvider {
+            get {
+                return ((string)(this["CacheProvider"]));
+            }
+        }
     }
 }

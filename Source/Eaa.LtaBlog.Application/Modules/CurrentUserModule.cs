@@ -7,6 +7,7 @@ using Eaa.LtaBlog.Application.Models;
 using Eaa.LtaBlog.Application.Core.Entities.Security;
 using Eaa.LtaBlog.Application.Core.Queries;
 using Raven.Client;
+using Eaa.LtaBlog.Application.Core.ServiceContracts;
 
 namespace Eaa.LtaBlog.Application.Modules
 {
@@ -14,16 +15,16 @@ namespace Eaa.LtaBlog.Application.Modules
 	{
 		#region IHttpModule Members
 
-		private Lazy<IDocumentSession> _session;
+		private ILoggedUserService _loggedUserService;
 
 		/// <summary>
 		/// Creates a new Current User Http Module
 		/// </summary>
 		/// <param name="session">A lazy IDocumentSession instace, since the registration of the module is before a session is created
 		/// we need to lazily call it so it can be initialized properly</param>
-		public CurrentUserModule(Lazy<IDocumentSession> session)
+		public CurrentUserModule(ILoggedUserService userService)
 		{
-			_session = session;
+			_loggedUserService = userService;
 		}
 		
 		public void Dispose()
@@ -38,7 +39,7 @@ namespace Eaa.LtaBlog.Application.Modules
 
 					if (httpContext.User != null && httpContext.User.Identity.IsAuthenticated)
 					{
-						var user = _session.Value.GetUserByEmail(context.User.Identity.Name);
+						var user = _loggedUserService.GetLoggedUser();
 
 						if (user != null)
 						{

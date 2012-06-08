@@ -1,0 +1,25 @@
+﻿@model Eaa.LtaBlog.Application.Models.PostsViewModel.PostModel
+
+@Html.Partial("PostSummary", Model)
+
+<div id="post-@Model.Post.Id-comments" class="postComments">
+	<h3>Comments</h3>
+@foreach (var comment in Model.Post.Comments)
+{
+	<div class="postComment">
+		<div class="commentText">@comment.Text</div>
+		<div class="commentDate">@comment.CreatedAt</div>
+	</div>
+}
+</div>
+
+<div class="addComment">
+	@using (Html.BeginForm("AddComment", "Posts"))
+	{
+		@Html.AntiForgeryToken()
+		@Html.Hidden("PostId", Model.Post.Id)
+		<textarea id="CommentText" name="CommentText" cols="80" rows="4">
+		</textarea>
+		<div><input type="submit" value="Add Comment" /></div>
+	}
+</div>

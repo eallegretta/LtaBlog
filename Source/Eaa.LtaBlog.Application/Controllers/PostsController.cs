@@ -9,6 +9,7 @@ using Eaa.LtaBlog.Application.Properties;
 using Eaa.LtaBlog.Application.Core.Queries;
 using AutoMapper;
 using Eaa.LtaBlog.Application.Core.Entities;
+using Eaa.LtaBlog.Application.Core.Commands.Posts;
 
 namespace Eaa.LtaBlog.Application.Controllers
 {
@@ -52,6 +53,34 @@ namespace Eaa.LtaBlog.Application.Controllers
 			var postModel = Mapper.Map<PostsViewModel.PostModel>(post);
 
 			return View(postModel);
+		}
+
+		[ChildActionOnly]
+		public ActionResult TagCloud()
+		{
+			return new EmptyResult();
+		}
+
+		[HttpPost]
+		public ActionResult AddComment(CommentInputModel input)
+		{
+			if (ModelState.IsValid)
+			{
+				var addCommentCmd = Mapper.Map<AddCommentCommand>(input);
+
+				CommandProcessor.Process(addCommentCmd);
+
+				if (addCommentCmd.IsValid)
+				{
+					Notify("Your comment has been received!", NotifyType.Success, NotifyPosition.Top);
+
+					return RedirectToAction("Show", new { id = input.PostId });
+				}
+
+				ModelState.AddValidationResults(addCommentCmd.ValidationResults());
+			}
+			
+			return RedirectToAction("Show", new { id = input.PostId });
 		}
 
     }

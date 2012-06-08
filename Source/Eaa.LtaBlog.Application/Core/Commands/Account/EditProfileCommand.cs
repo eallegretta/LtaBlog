@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using DataAnnotationsExtensions;
 using Eaa.LtaBlog.Application.Core.Queries;
 using Eaa.LtaBlog.Application.Core.Entities;
+using Eaa.LtaBlog.Application.Core.ServiceContracts;
 
 namespace Eaa.LtaBlog.Application.Core.Commands.Account
 {

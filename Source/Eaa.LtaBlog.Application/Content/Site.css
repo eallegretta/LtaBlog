@@ -1,0 +1,45 @@
+﻿body
+{
+	border:0;
+	padding:0;
+	margin:0;
+	background-color:#006699;
+	font-family:Segoe UI, Arial;
+	font-size:12px;
+}
+
+#site
+{
+	padding:4px;
+	margin:10px auto;
+	width:990px;
+	background-color:White;
+	border:1px solid black;
+}
+
+#header
+{
+	font-size:24px;
+}
+
+#content
+{
+	padding-top:10px;
+	clear:both;
+}
+
+#currentUser
+{
+	float:right;
+	font-size:12px;
+}
+
+.inline-login form
+{
+	display:inline;
+}
+
+.inline-login div 
+{
+	display:inline;
+}

@@ -1,0 +1,11 @@
+﻿@model Eaa.LtaBlog.Application.Models.LoginModel
+
+@using (Html.BeginForm("Login", "Account"))
+{
+	@Html.EditorForModel()
+
+	@Html.ValidationMessage("UserNotExistOrPasswordNotMatch")
+	
+	<input type="submit" value="Login" />
+}
+

@@ -1,0 +1,41 @@
+﻿@model Eaa.LtaBlog.Application.Models.PostsViewModel
+
+@{
+    ViewBag.Title = "Welcome";
+}
+
+<div id="posts">
+@foreach (var post in Model.Posts)
+{
+	<div id="post-@post.Post.Id" class="post">
+		<div class="postTitle">@Html.ActionLink(post.Post.Title, "Show", new { id = post.Post.Id })</div>
+		<div class="postBody">@Html.Raw(post.Post.Body)</div>
+		<div class="postFooter">
+			<div class="postAuthor">@post.Author</div>
+			<div class="postAuthor">@post.Post.CreatedAt</div>
+			<div class="postTags">
+				<ul>
+				@foreach (var tag in post.Post.Tags)
+				{
+					<li>@tag</li>
+				}
+				</ul>
+			</div>
+		</div>
+	</div>
+}
+
+@if (Model.HasPrevPage || Model.HasNextPage)
+{
+	<div class="postsPager">
+	@if (Model.HasPrevPage)
+	{
+		<div class="postsPrevPage">@Html.ActionLink("Previous Page", "List", new { page = Model.CurrentPage - 1 });</div>
+	}
+	@if (Model.HasPrevPage)
+	{
+		<div class="postsPrevPage">@Html.ActionLink("Previous Page", "List", new { page = Model.CurrentPage + 1 });</div>
+	}
+	</div>
+}
+</div>
